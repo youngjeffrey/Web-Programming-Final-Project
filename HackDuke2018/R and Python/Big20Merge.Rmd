@@ -1,0 +1,224 @@
+---
+title: "Merge stocks of Top 20 Companies"
+author: "Jeffrey Mei"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+options(scipen=999)
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(rvest)
+library(data.table)
+library(readr)
+library(plyr)
+library(dplyr)
+aa <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/aa.csv")
+aep <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/aep.csv")
+aet <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/aet.csv")
+axp <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/axp.csv")
+ba <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/ba.csv")
+bmy <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/bmy.csv")
+c <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/c.csv")
+cat <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/cat.csv")
+cl <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/cl.csv")
+cnp <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/cnp.csv")
+cvx <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/cvx.csv")
+dis <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/dis.csv")
+dte <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/dte.csv")
+dwdp <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/dwdp.csv")
+ed <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/ed.csv")
+f <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/f.csv")
+gd <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/gd.csv")
+ge <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/ge.csv")
+gt <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/gt.csv")
+hon <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/hon.csv")
+hpq <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/hpq.csv")
+ibm <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/ibm.csv")
+intc <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/intc.csv")
+ip <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/ip.csv")
+jnj <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/jnj.csv")
+jpm <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/jpm.csv")
+ko <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/ko.csv")
+kr <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/kr.csv")
+lmt <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/lmt.csv")
+mcd <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/mcd.csv")
+mmm <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/mmm.csv")
+mo <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/mo.csv")
+mrk <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/mrk.csv")
+mro <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/mro.csv")
+nav <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/nav.csv")
+pep <- read_csv("C:/Jeff's Files/HackDuke 2018/Top_25_CSV/pep.csv")
+pg <- read_csv("Top_25_CSV/pg.csv")
+utx <- read_csv("Top_25_CSV/utx.csv")
+wmt <- read_csv("Top_25_CSV/wmt.csv")
+wy <- read_csv("Top_25_CSV/wy.csv")
+xom <- read_csv("Top_25_CSV/xom.csv")
+xrx <- read_csv("Top_25_CSV/xrx.csv")
+
+list.files(pattern=".csv$")
+list.filenames<-list.files(pattern=".csv$")
+list.data<-list()
+
+# create a loop to read in your data
+for (i in 1:length(list.filenames))
+{
+list.data[[i]]<-read.csv(list.filenames[i])
+}
+
+for(i in 1:length(list.filenames)) {
+  list.data[[i]]$OpenInt <- NULL
+  list.data[[i]]$High <- NULL
+  list.data[[i]]$Low <- NULL
+}
+
+for(i in 1:length(list.filenames)) {
+    list.data[[i]] <- mutate(list.data[[i]], Pct_Chg = (Close - Open)/Open)
+}
+
+list.data[[1]] <- setnames(list.data[[1]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(AA)', 'Close(AA)', 'Volume(AA)', 'Pct_Chg(AA)'))
+
+list.data[[2]] <- setnames(list.data[[2]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(AEP)', 'Close(AEP)', 'Volume(AEP)', 'Pct_Chg(AEP)'))
+
+list.data[[3]] <- setnames(list.data[[3]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(AET)', 'Close(AET)', 'Volume(AET)', 'Pct_Chg(AET)'))
+
+list.data[[4]] <- setnames(list.data[[4]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(AXP)', 'Close(AXP)', 'Volume(AXP)', 'Pct_Chg(AXP)'))
+
+list.data[[5]] <- setnames(list.data[[5]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(BA)', 'Close(BA)', 'Volume(BA)', 'Pct_Chg(BA)'))
+
+list.data[[6]] <- setnames(list.data[[6]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(BMV)', 'Close(BMV)', 'Volume(BMV)', 'Pct_Chg(BMV)'))
+
+list.data[[7]] <- setnames(list.data[[7]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(C)', 'Close(C)', 'Volume(C)', 'Pct_Chg(C)'))
+
+list.data[[8]] <- setnames(list.data[[8]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(CAT)', 'Close(CAT)', 'Volume(CAT)', 'Pct_Chg(CAT)'))
+
+list.data[[9]] <- setnames(list.data[[9]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(CL)', 'Close(CL)', 'Volume(CL)', 'Pct_Chg(CL)'))
+
+list.data[[10]] <- setnames(list.data[[10]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(CNP)', 'Close(CNP)', 'Volume(CNP)', 'Pct_Chg(CNP)'))
+
+list.data[[11]] <- setnames(list.data[[11]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(CVX)', 'Close(CVX)', 'Volume(CVX)', 'Pct_Chg(CVX)'))
+
+list.data[[12]] <- setnames(list.data[[12]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(DIS)', 'Close(DIS)', 'Volume(DIS)', 'Pct_Chg(DIS)'))
+
+list.data[[13]] <- setnames(list.data[[13]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(DTE)', 'Close(DTE)', 'Volume(DTE)', 'Pct_Chg(DTE)'))
+
+list.data[[14]] <- setnames(list.data[[14]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(DWDP)', 'Close(DWDP)', 'Volume(DWDP)', 'Pct_Chg(DWDP)'))
+
+list.data[[15]] <- setnames(list.data[[15]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(ED)', 'Close(ED)', 'Volume(ED)', 'Pct_Chg(ED)'))
+
+list.data[[16]] <- setnames(list.data[[16]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(F)', 'Close(F)', 'Volume(F)', 'Pct_Chg(F)'))
+
+list.data[[17]] <- setnames(list.data[[17]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(GD)', 'Close(GD)', 'Volume(GD)', 'Pct_Chg(GD)'))
+
+list.data[[18]] <- setnames(list.data[[18]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(GE)', 'Close(GE)', 'Volume(GE)', 'Pct_Chg(GE)'))
+
+list.data[[19]] <- setnames(list.data[[19]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(GT)', 'Close(GT)', 'Volume(GT)', 'Pct_Chg(GT)'))
+
+list.data[[20]] <- setnames(list.data[[20]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(HON)', 'Close(HON)', 'Volume(HON)', 'Pct_Chg(HON)'))
+
+list.data[[21]] <- setnames(list.data[[21]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(HPQ)', 'Close(HPQ)', 'Volume(HPQ)', 'Pct_Chg(HPQ)'))
+
+list.data[[22]] <- setnames(list.data[[22]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(IBM)', 'Close(IBM)', 'Volume(IBM)', 'Pct_Chg(IBM)'))
+
+list.data[[23]] <- setnames(list.data[[23]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(INTC)', 'Close(INTC)', 'Volume(INTC)', 'Pct_Chg(INTC)'))
+
+list.data[[24]] <- setnames(list.data[[24]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(IP)', 'Close(IP)', 'Volume(IP)', 'Pct_Chg(IP)'))
+
+list.data[[25]] <- setnames(list.data[[25]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(JNJ)', 'Close(JNJ)', 'Volume(JNJ)', 'Pct_Chg(JNJ)'))
+
+list.data[[26]] <- setnames(list.data[[26]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(JPM)', 'Close(JPM)', 'Volume(JPM)', 'Pct_Chg(JPM)'))
+
+list.data[[27]] <- setnames(list.data[[27]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(KO)', 'Close(KO)', 'Volume(KO)', 'Pct_Chg(KO)'))
+
+list.data[[28]] <- setnames(list.data[[28]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(KR)', 'Close(KR)', 'Volume(KR)', 'Pct_Chg(KR)'))
+
+list.data[[29]] <- setnames(list.data[[29]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(LMT)', 'Close(LMT)', 'Volume(LMT)', 'Pct_Chg(LMT)'))
+
+list.data[[30]] <- setnames(list.data[[30]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(MCD)', 'Close(MCD)', 'Volume(MCD)', 'Pct_Chg(MCD)'))
+
+list.data[[31]] <- setnames(list.data[[31]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(MMM)', 'Close(MMM)', 'Volume(MMM)', 'Pct_Chg(MMM)'))
+
+list.data[[32]] <- setnames(list.data[[32]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(MO)', 'Close(MO)', 'Volume(MO)', 'Pct_Chg(MO)'))
+
+list.data[[33]] <- setnames(list.data[[33]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(MRK)', 'Close(MRK)', 'Volume(MRK)', 'Pct_Chg(MRK)'))
+
+list.data[[34]] <- setnames(list.data[[34]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(MRO)', 'Close(MRO)', 'Volume(MRO)', 'Pct_Chg(MRO)'))
+
+list.data[[35]] <- setnames(list.data[[35]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(NAV)', 'Close(NAV)', 'Volume(NAV)', 'Pct_Chg(NAV)'))
+
+list.data[[36]] <- setnames(list.data[[36]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(PEP)', 'Close(PEP)', 'Volume(PEP)', 'Pct_Chg(PEP)'))
+
+list.data[[37]] <- setnames(list.data[[37]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(PG)', 'Close(PG)', 'Volume(PG)', 'Pct_Chg(PG)'))
+
+list.data[[38]] <- setnames(list.data[[38]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(UTX)', 'Close(UTX)', 'Volume(UTX)', 'Pct_Chg(UTX)'))
+
+list.data[[39]] <- setnames(list.data[[39]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(WMT)', 'Close(WMT)', 'Volume(WMT)', 'Pct_Chg(WMT)'))
+
+list.data[[40]] <- setnames(list.data[[40]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(WY)', 'Close(WY)', 'Volume(WY)', 'Pct_Chg(WY)'))
+
+list.data[[41]] <- setnames(list.data[[41]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(XOM)', 'Close(XOM)', 'Volume(XOM)', 'Pct_Chg(XOM)'))
+
+list.data[[42]] <- setnames(list.data[[42]], old = c('Open', 'Close', 'Volume', 'Pct_Chg'),
+                           new = c('Open(XRX)', 'Close(XRX)', 'Volume(XRX)', 'Pct_Chg(XRX)'))
+
+AA_AEP <- join_all(list(list.data[[1]],list.data[[2]],list.data[[3]],list.data[[4]], list.data[[5]],list.data[[6]],list.data[[7]],list.data[[8]],list.data[[9]],list.data[[10]],list.data[[11]], list.data[[12]], list.data[[13]], list.data[[14]], list.data[[15]], list.data[[16]], list.data[[17]], list.data[[18]], list.data[[19]], list.data[[20]], list.data[[21]], list.data[[22]], list.data[[23]], list.data[[24]], list.data[[25]], list.data[[26]], list.data[[27]], list.data[[28]], list.data[[29]], list.data[[30]], list.data[[31]], list.data[[32]], list.data[[33]], list.data[[34]], list.data[[35]], list.data[[36]], list.data[[37]], list.data[[38]], list.data[[39]], list.data[[40]], list.data[[41]], list.data[[42]]),  by='ï..Date', type='left')
+
+#42 data sets
+#print(list.data[[3]])
+
+#list.OpenValues <- list('Open(GT)', 'Open(hon)')
+#print(list.OpenValues[[1]])
+
+write.csv(AA_AEP, file=  "Top_25_CSV/EntirelyMerged.csv")
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.

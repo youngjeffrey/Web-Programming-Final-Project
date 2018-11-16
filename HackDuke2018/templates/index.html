@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock Predictor</title>
+     <link rel="stylesheet" href="style.css">
+</head>
+<body bgcolor="silver">
+    <h1 align="center" >Economic Indictators and Effects on Equity Performance</h1>
+    
+    <section class="container">
+    <div class="tableauplot" align="center">
+    <script type='text/javascript' src='https://us-east-1.online.tableau.com/javascripts/api/viz_v1.js'></script><div class='tableauPlaceholder' style='width: 1000px; height: 827px;'><object class='tableauViz' width='1000' height='827' style='display:none;'><param name='host_url' value='https%3A%2F%2Fus-east-1.online.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='&#47;t&#47;ruiyan' /><param name='name' value='stock_CloseValue2&#47;Dashboard1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='showAppBanner' value='false' /><param name='filter' value='iframeSizedToWindow=true' /></object></div>
+    </div>
+    
+    <div class="stockform">
+    <select id="selectcompany">
+  <option value="ticker" disabled selected>Select Ticker</option>
+  <option value="1">S&P 500</option>
+  <option value="2">American Express Co</option>
+  <option value="3">Boeing Co</option>
+    <option value="4">IBM</option>
+  <option value="5">HP Inc</option>
+  <option value="6">Consolidated Edison Inc</option>
+  <option value="7">Exxon Mobil Corp</option>
+  <option value="8">Weyerhaeuser Co</option>
+  <option value="9">Navistar International Corp</option>
+  <option value="10">PepsiCo Inc</option>
+  <option value="11">Marathon Oil Corp</option>
+</select>
+    
+    <br>
+    <br>
+    <form>
+        Wholesales
+        <br>
+        <input type = "number" id = "wholesales"/>
+        <br>
+        <br>
+        CPI
+        <br>
+        <input type = "number" id= "cpi"/>
+        <br>
+        <br>
+        Industrial Production
+        <br>
+        <input type = "number" id= "ip"/>
+        <br>
+        <br>
+        Jobless Rate
+        <br>
+        <input type = "number" id= "joblessrate"/>
+        <br>
+        <br>
+        Non Farm Payrolls
+        <br>
+        <input type = "number" id= "nonfarmpayrolls"/>
+        <br>
+        <br>
+        Producer Price Index
+        <br>
+        <input type = "number" id= "producerpriceindex"/>
+        <br>
+        <br>
+        Retail Sales
+        <br>
+        <input type = "number" id= "retailsales"/>
+        <br>
+        <br>
+        Trade Balance
+        <br>
+        <input type = "number" id= "tradebalance"/>
+        <br>
+        <br>
+        Housing Starts
+        <br>
+        <input type = "number" id= "housingstarts"/>
+        
+        
+    </form>
+<br>
+
+<button class="b1" onclick="sum()">Calculate</button>
+
+        <br>
+<br>
+<br>
+        </div>
+</section>
+<br>
+<div class="one" style="background-color:#D3D3D3;">
+    <p><b>Predicted Price:</b></p>
+<p id="demo2"> </p>
+<p><b>Upper Bound Value</b></p>
+<p id="demo3"></p>
+<p><b>Lower Bound Value</b></p>
+<p id="demo4"></p>
+    </div>
+    
+
+    
+<script type="text/javascript">
+ function sum() 
+{ 
+    var e = document.getElementById("selectcompany");
+    var strUser = e.options[e.selectedIndex].value;
+    var fn, ln, result, ip, jr, nfp, ppi, rs, tb, hs;
+    fn = parseFloat(document.getElementById("wholesales").value, 10);
+    ln = parseFloat(document.getElementById("cpi").value, 10);
+    ip = parseFloat(document.getElementById("ip").value, 10);
+    jr = parseFloat(document.getElementById("joblessrate").value, 10);
+    nfp = parseFloat(document.getElementById("nonfarmpayrolls").value, 10);
+    ppi = parseFloat(document.getElementById("producerpriceindex").value, 10);
+    rs = parseFloat(document.getElementById("retailsales").value, 10);
+    tb = parseFloat(document.getElementById("tradebalance").value, 10);
+    hs = parseFloat(document.getElementById("housingstarts").value, 10);
+    var upperbound, lowerbound;
+    
+    if(strUser == 1) {
+        var intercept = -1144;
+        var ws2 = 8.126;
+        var cpi = 0;
+        var ip2 = 1.225;
+        var jr2 = 4.206;
+        var nfp2 = 0.007239;
+        var ppi2 = 0.4385;
+        var rs2 = 2.919;
+        var tb2 = 0.001372;
+        var hs2 = 0.7652;
+        result = parseFloat(ws2 * fn + cpi * ln + ip2 * ip + jr2 * jr + nfp2 * nfp + 
+                            ppi2 * ppi + rs2 * rs + tb2 * tb + hs2 * hs + intercept);
+        var mse = 100.0698;
+        upperbound = parseFloat(result + Math.sqrt(mse));
+        lowerbound = parseFloat(result - Math.sqrt(mse));
+    } else if(strUser == 2){
+        var intercept = -64.97;
+        var ws2 = 2.763;
+        var cpi = 0;
+        var ip2 = 2.037;
+        var jr2 = -2.757;
+        var nfp2 = -0.001057;
+        var ppi2 = 0.2726;
+        var rs2 = 0.7754;
+        var tb2 = 0.001022;
+        var hs2 = 0.4443;
+        result = parseFloat(ws2 * fn + cpi * ln + ip2 * ip + jr2 * jr + nfp2 * nfp + 
+                            ppi2 * ppi + rs2 * rs + tb2 * tb + hs2 * hs + intercept);
+        var mse = 46.6496;
+        upperbound = parseFloat(result + Math.sqrt(mse));
+        lowerbound = parseFloat(result - Math.sqrt(mse));
+    } else if(strUser == 3) {
+        var intercept = -412.2;
+        var ws2 = 7.181;
+        var cpi = 5.166;
+        var ip2 = -1.632;
+        var jr2 = -6.153;
+        var nfp2 = 0.003570;
+        var ppi2 = 0.6409;
+        var rs2 = 1.153;
+        var tb2 = 0.002583;
+        var hs2 = 1.215;
+        result = parseFloat(ws2 * fn + cpi * ln + ip2 * ip + jr2 * jr + nfp2 * nfp + 
+                            ppi2 * ppi + rs2 * rs + tb2 * tb + hs2 * hs + intercept);
+        var mse = 190.0858;
+        upperbound = parseFloat(result + Math.sqrt(mse));
+        lowerbound = parseFloat(result - Math.sqrt(mse));
+    } else if(strUser == 4) {
+        var intercept = -599.5;
+        var ws2 = 1.9;
+        var cpi = 2.206;
+        var ip2 = 2.196;
+        var jr2 = 6.915;
+        var nfp2 = 0.003134;
+        var ppi2 = 0.7673;
+        var rs2 = 3.118;
+        var tb2 = 0.001048;
+        var hs2 = -0.4002;
+        result = parseFloat(ws2 * fn + cpi * ln + ip2 * ip + jr2 * jr + nfp2 * nfp + 
+                            ppi2 * ppi + rs2 * rs + tb2 * tb + hs2 * hs + intercept);
+        var mse = 188.5199;
+        upperbound = parseFloat(result + Math.sqrt(mse));
+        lowerbound = parseFloat(result - Math.sqrt(mse));
+    } else if(strUser == 5) {
+        var intercept = -3280;
+        var ws2 = 5.390;
+        var cpi = 2.022;
+        var ip2 = -2.710;
+        var jr2 = -5.460;
+        var nfp2 = 0.003491;
+        var ppi2 = 0.6220;
+        var rs2 = 0.7320;
+        var tb2 = 0.001724;
+        var hs2 = 1.050;
+        result = parseFloat(ws2 * fn + cpi * ln + ip2 * ip + jr2 * jr + nfp2 * nfp + 
+                            ppi2 * ppi + rs2 * rs + tb2 * tb + hs2 * hs + intercept);
+        var mse = 15.12889;
+        upperbound = parseFloat(result + Math.sqrt(mse));
+        lowerbound = parseFloat(result - Math.sqrt(mse));
+    } else if(strUser == 6) {
+        var intercept = -208.1;
+        var ws2 = 2.113;
+        var cpi = 0.8629;
+        var ip2 = -0.6213;
+        var jr2 = 0.5686;
+        var nfp2 = 0.001962;
+        var ppi2 = 0.1305;
+        var rs2 = 0.5385;
+        var tb2 = 0.0006295;
+        var hs2 = 0.2883;
+        result = parseFloat(ws2 * fn + cpi * ln + ip2 * ip + jr2 * jr + nfp2 * nfp + 
+                            ppi2 * ppi + rs2 * rs + tb2 * tb + hs2 * hs + intercept);
+        var mse = 32.04984;
+        upperbound = parseFloat(result + Math.sqrt(mse));
+        lowerbound = parseFloat(result - Math.sqrt(mse));
+    } else if(strUser == 7) {
+        var intercept = -0.01021;
+        var ws2 = -1.159;
+        var cpi = -0.1957;
+        var ip2 = 0.5554;
+        var jr2 = -1.286;
+        var nfp2 = 0;
+        var ppi2 = 0.5670;
+        var rs2 = 0.0004428;
+        var tb2 = 0.3346;
+        var hs2 = 0.2272;
+        result = parseFloat(ws2 * fn + cpi * ln + ip2 * ip + jr2 * jr + nfp2 * nfp + 
+                            ppi2 * ppi + rs2 * rs + tb2 * tb + hs2 * hs + intercept);
+        var mse = 15.80163;
+        upperbound = parseFloat(result + Math.sqrt(mse));
+        lowerbound = parseFloat(result - Math.sqrt(mse));    
+    } else if(strUser == 8) {
+        var intercept = -0.1989;
+        var ws2 = 0.7531;
+        var cpi = 0.4396;
+        var ip2 = 0.3641;
+        var jr2 = -1.244;
+        var nfp2 = 0.0001155;
+        var ppi2 = 0.06660;
+        var rs2 = 0.359;
+        var tb2 = 0.0003874;
+        var hs2 = 0.1995;
+        result = parseFloat(ws2 * fn + cpi * ln + ip2 * ip + jr2 * jr + nfp2 * nfp + 
+                            ppi2 * ppi + rs2 * rs + tb2 * tb + hs2 * hs + intercept);
+        var mse = 6.828369;
+        upperbound = parseFloat(result + Math.sqrt(mse));
+        lowerbound = parseFloat(result - Math.sqrt(mse));
+    } else if(strUser == 9) {
+        var intercept = -6.437;
+        var ws2 = 1.536;
+        var cpi = 1.836;
+        var ip2 = 1.320;
+        var jr2 = 4.460;
+        var nfp2 = -0.0006459;
+        var ppi2 = -0.1868;
+        var rs2 = 0.961;
+        var tb2 = -0.00019672;
+        var hs2 = -0.03868;
+        result = parseFloat(ws2 * fn + cpi * ln + ip2 * ip + jr2 * jr + nfp2 * nfp + 
+                            ppi2 * ppi + rs2 * rs + tb2 * tb + hs2 * hs + intercept);
+        var mse = 105.4492;
+        upperbound = parseFloat(result + Math.sqrt(mse));
+        lowerbound = parseFloat(result - Math.sqrt(mse));
+    } else if(strUser == 10) {
+        var intercept = -2691;
+        var ws2 = 2.511;
+        var cpi = 1.240;
+        var ip2 = -0.851;
+        var jr2 = -0.7105;
+        var nfp2 = 0.002392;
+        var ppi2 = 0.3177;
+        var rs2 = 0.6035;
+        var tb2 = 0.001015;
+        var hs2 = 0.5072;
+        result = parseFloat(ws2 * fn + cpi * ln + ip2 * ip + jr2 * jr + nfp2 * nfp + 
+                            ppi2 * ppi + rs2 * rs + tb2 * tb + hs2 * hs + intercept);
+        var mse = 28.57524;
+        upperbound = parseFloat(result + Math.sqrt(mse));
+        lowerbound = parseFloat(result - Math.sqrt(mse));
+    } else {
+        var intercept = 101.0;
+        var ws2 = -1.284;
+        var cpi = -0.3158;
+        var ip2 = 1.397;
+        var jr2 = -1.589;
+        var nfp2 = -0.002046;
+        var ppi2 = 0.3227;
+        var rs2 = 0.3835;
+        var tb2 = 0.0001741;
+        var hs2 = 0.1165;
+        result = parseFloat(ws2 * fn + cpi * ln + ip2 * ip + jr2 * jr + nfp2 * nfp + 
+                            ppi2 * ppi + rs2 * rs + tb2 * tb + hs2 * hs + intercept);
+        var mse = 7.895262;
+        upperbound = parseFloat(result + Math.sqrt(mse));
+        lowerbound = parseFloat(result - Math.sqrt(mse));
+    }
+    document.getElementById("demo2").innerHTML = result;
+    document.getElementById("demo3").innerHTML = upperbound; 
+    document.getElementById("demo4").innerHTML = lowerbound; 
+
+}
+</script>
+</body>
+</html>

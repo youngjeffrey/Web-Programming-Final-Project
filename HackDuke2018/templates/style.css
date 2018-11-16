@@ -1,0 +1,43 @@
+.container {
+    width: 90%;
+    height: 875px;
+    background: silver;
+    margin: auto;
+    padding: 5px;
+}
+
+.stockform {
+    width: 15%;
+    height: 600px;
+    float: left;
+    font-family: "San Serif", Times, serif;
+    font-size: 18px;
+}
+
+.tableauplot {
+    margin-left: 15%;
+    height: 200px;
+}
+
+.one {
+    width: 50%;
+    height: 400px;
+    float: left;
+    font-family: "San Serif", Times, serif;
+    font-size: 18px;
+    color:black;
+    margin-left: 5%;
+}
+
+.b1 {
+    background-color: #A9A9A9;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
