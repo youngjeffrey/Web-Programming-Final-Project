@@ -1,0 +1,258 @@
+@import url('https://fonts.googleapis.com/css?family=Muli');
+
+body {
+    background-image: url("airportwallpaper.jpg");
+    background-size:cover;
+}
+
+.mainpage_headers {
+    color: white;
+    margin-left: 15%;
+    font-family: 'Muli', sans-serif;
+    -webkit-animation-duration: 10s;
+    animation-duration: 10s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@-webkit-keyframes fadeIn {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+         
+@keyframes fadeIn {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+         
+.fadeIn {
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+}
+
+.login_div {
+    width: 30%;
+    height: 20%;
+    background: rgba(199, 199, 199, 0.5);
+    margin-left: 15%;
+    padding: 10px;
+    font-family: 'Muli', sans-serif;
+}
+
+button {
+    background-color: lightblue; 
+    border: none; color: white; 
+    padding: 8px 20px;
+    font-family: 'Muli', sans-serif;
+    text-align: center; 
+    text-decoration: none; 
+    display: inline-block; 
+    font-size: 16px;
+}
+
+button:not(:last-child) {
+    border-right: none;
+}
+
+button:hover {
+    background-color: #00bfff;
+}
+
+.jlw {
+    width:100%;
+    position:fixed;
+    bottom:20px;
+    margin-left: 75%;
+    color: white;
+    font-family: 'Muli', sans-serif;
+    font-size: 25px;
+}
+
+.button_top {
+    background: rgba(199, 199, 199, 0.5);
+    width: 100%;
+    height: 10%;
+}
+
+.btn-group {
+    margin: auto;
+}
+
+.popular_div {
+    width: 95%;
+    background: rgba(199, 199, 199, 0.5);
+    margin: auto;
+    height: 550px;
+    overflow-y: auto;
+    text-align: center;
+}
+
+.pop_div {
+    background: rgba(199, 199, 199, 0.8);
+    border-radius: 18px;
+}
+
+.string_search {
+    font-family: 'Muli', sans-serif;
+    margin-left: 75%;
+    font-size: 20px;
+}
+
+.selection_div {
+    width: 95%;
+    background: rgba(199, 199, 199, 0.5);
+    font-family: 'Muli', sans-serif;
+    margin: auto;
+    height: 540px;
+}
+
+.selection_div2 {
+    width: 95%;
+    background: rgba(199, 199, 199, 0.5);
+    font-family: 'Muli', sans-serif;
+    margin: auto;
+    height: 240px;
+}
+
+.airline_selection {
+    font-family: 'Muli', sans-serif;
+    margin-left: 68%;
+    width: 30%;
+    overflow-y: auto;
+    display:inline-block;
+    float: left;
+}
+
+ul {
+    list-style-type: none;
+    overflow-y: auto;
+    height: 300px;
+}
+
+li {
+    font-family: 'Muli', sans-serif;
+    color: white;
+}
+
+.aairport_selection {
+    float: left;
+    width: 45%;
+    display:inline-block;
+    margin-left: 2%;
+}
+
+.time_selection {
+    width: 15%;
+    display:inline-block;
+    float: left;
+}
+
+.aairport_selection2 {
+    float: left;
+    width: 45%;
+    display:inline-block;
+    margin-left: 2%;
+}
+
+.search_flights {
+    width: 35%;
+    display:inline-block;
+    float: left;
+}
+
+.search_div {
+    width: 95%;
+    background: rgba(199, 199, 199, 0.5);
+    margin: auto;
+    height: 550px;
+    overflow-y: auto;
+    text-align: center;
+}
+
+.ser_div {
+    background: rgba(199, 199, 199, 0.8);
+    border-radius: 18px;
+}
+
+.map_div {
+    background: rgba(199, 199, 199, 0.5);
+}
+
+.itinerary_div {
+    width: 95%;
+    background: rgba(199, 199, 199, 0.5);
+    margin: auto;
+    height: 550px;
+    overflow-y: auto;
+    text-align: center;
+}
+
+.iter_div {
+    background: rgba(199, 199, 199, 0.8);
+    border-radius: 18px;
+}
+
+.iter_div3 {
+    background: rgba(199, 199, 199, 0.8);
+    border-radius: 18px;
+}
+
+.seat_list {
+    background: rgba(199, 199, 199, 0.8);
+    border-radius: 18px;
+    text-align: left;
+}
+
+.iter_div1 {
+    display:inline-block;
+    float: left;
+    width: 70%;
+    margin-left: 5%;
+    text-align: left;
+}
+
+.iter_div2 {
+    display:inline-block;
+    float: left;
+    width: 20%;
+    text-align: left;
+}
+
+.iter_div4 {
+    background: rgba(199, 199, 199, 0.8);
+    border-radius: 18px;
+}
+
+.flight_info_div {
+    font-size: 20px;
+}
+
+.itinerary_div2 {
+    width: 95%;
+    background: rgba(199, 199, 199, 0.5);
+    margin: auto;
+    height: 550px;
+    overflow-y: auto;
+    text-align: center;
+}
+
+.confirm_div {
+    width: 95%;
+    background: rgba(199, 199, 199, 0.5);
+    margin: auto;
+    height: 550px;
+    overflow-y: auto;
+}
+
+.con_div1 {
+    background: rgba(199, 199, 199, 0.8);
+    border-radius: 18px;
+}
+
+.con_div2 {
+    background: rgba(199, 199, 199, 0.8);
+    border-radius: 18px;
+    height: 550px;
+    width: 85%;
+    margin: auto;
+}
